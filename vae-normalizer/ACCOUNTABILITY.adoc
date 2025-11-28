@@ -1,0 +1,291 @@
+// SPDX-FileCopyrightText: 2024 Joshua Jewell
+// SPDX-License-Identifier: MIT
+= Mutually Assured Accountability (MAA) Framework
+:toc:
+:toclevels: 3
+
+This document describes the Mutually Assured Accountability (MAA) framework implementation for the VAE Dataset Normalizer project.
+
+== Overview
+
+MAA ensures that all participants in the project ecosystem—maintainers, contributors, users, and automated systems—are accountable to each other through transparent, verifiable mechanisms.
+
+== Core Principles
+
+=== Mutual Accountability
+
+* Every action is attributable to an identifiable actor
+* Every actor can verify others' compliance
+* Accountability flows in all directions (not just top-down)
+* Trust is earned through verifiable behavior, not assumed
+
+=== Transparency
+
+* All decisions are documented
+* All changes are traceable
+* All policies are publicly accessible
+* All enforcement is consistent
+
+=== Proportionality
+
+* Accountability measures match risk levels
+* Lightweight for low-risk contributions
+* Rigorous for security-critical changes
+
+== RMR Utilities (Reputation, Merit, Rights)
+
+=== Reputation
+
+Reputation is earned through consistent, positive contributions:
+
+[cols="1,2,2"]
+|===
+|Level |Criteria |Privileges
+
+|New
+|First contribution
+|Submit issues, MRs to Perimeter 3
+
+|Established
+|5+ accepted contributions
+|Perimeter 2 candidacy, priority review
+
+|Trusted
+|10+ contributions, 3+ months active
+|Direct commit to dev branches
+
+|Core
+|Sustained excellence, security vetted
+|Full maintainer access
+|===
+
+==== Reputation Tracking
+
+* Contributions tracked via Git history
+* Quality metrics from code review
+* Response times to issues/MRs
+* Mentorship of new contributors
+
+=== Merit
+
+Merit is the objective quality of contributions:
+
+* **Code Quality**: Passes lints, tests, security scans
+* **Documentation**: Complete, accurate, helpful
+* **Review Quality**: Thorough, constructive, timely
+* **Community**: Helpful in discussions, welcoming to newcomers
+
+==== Merit Assessment
+
+[source,bash]
+----
+# Run merit assessment
+just merit-report <contributor>
+
+# Output includes:
+# - Contributions by type (code, docs, review)
+# - Quality scores
+# - Impact metrics
+----
+
+=== Rights
+
+Rights are granted based on reputation and merit:
+
+[cols="1,3"]
+|===
+|Right |Description
+
+|Submit
+|Create issues, MRs, discussions
+
+|Review
+|Provide code reviews (advisory)
+
+|Approve
+|Approve MRs for merge (Perimeter 2+)
+
+|Merge
+|Merge approved MRs (Perimeter 1)
+
+|Release
+|Create releases (Core maintainers)
+
+|Govern
+|Participate in governance decisions (Core)
+|===
+
+== RMO Utilities (Responsibility, Monitoring, Obligations)
+
+=== Responsibility
+
+Each role has defined responsibilities:
+
+==== Contributors (Perimeter 3)
+
+* Follow contribution guidelines
+* Respond to review feedback
+* Sign commits (DCO)
+* Respect code of conduct
+
+==== Trusted Contributors (Perimeter 2)
+
+* All Perimeter 3 responsibilities, plus:
+* Provide quality reviews
+* Mentor new contributors
+* Report security issues privately
+* Maintain assigned components
+
+==== Maintainers (Perimeter 1)
+
+* All Perimeter 2 responsibilities, plus:
+* Timely response to security issues (24h acknowledgement)
+* Release management
+* Governance participation
+* Conflict resolution
+* Final merge authority
+
+=== Monitoring
+
+Automated and manual monitoring ensures accountability:
+
+==== Automated Monitoring
+
+[source,bash]
+----
+# CI/CD pipeline checks
+just validate          # Full RSR compliance
+just audit-licence     # SPDX compliance
+just security-scan     # Vulnerability scan
+just test              # Test coverage
+----
+
+==== Manual Monitoring
+
+* Quarterly maintainer reviews
+* Annual security audit
+* Contributor activity tracking
+* Code of conduct compliance
+
+=== Obligations
+
+==== Project Obligations to Contributors
+
+* Timely review of contributions (< 7 days initial response)
+* Clear feedback on rejections
+* Recognition for contributions
+* Safe, inclusive environment
+* Transparent governance
+
+==== Contributor Obligations to Project
+
+* Quality contributions
+* Good faith engagement
+* Respect for others
+* Adherence to guidelines
+* Timely responses to feedback
+
+==== Mutual Obligations
+
+* Honest communication
+* Constructive criticism
+* Conflict resolution through process
+* Respect for decisions
+
+== Audit Trail
+
+=== Provenance Tracking
+
+All changes are tracked with full provenance:
+
+* Git history with signed commits
+* SPDX headers on all files
+* `.well-known/provenance.json` for release attestation
+* CI/CD logs for build verification
+
+=== Immutability
+
+* Git history is append-only (no force push to main)
+* Release artifacts are checksummed
+* SBOM generated for each release
+
+=== Verification
+
+[source,bash]
+----
+# Verify provenance chain
+just verify-provenance
+
+# Verify release integrity
+just verify-release <version>
+
+# Audit contributor history
+just audit-contributor <username>
+----
+
+== Enforcement
+
+=== Graduated Response
+
+Violations are addressed proportionally:
+
+1. **Informal reminder**: Minor, first-time issues
+2. **Formal warning**: Repeated minor or single moderate issues
+3. **Temporary restriction**: Serious or repeated moderate issues
+4. **Permanent ban**: Severe violations or pattern of harm
+
+=== Appeals
+
+* All enforcement decisions can be appealed
+* Appeals reviewed by uninvolved maintainers
+* Final appeal to governance body
+
+=== Documentation
+
+* All enforcement actions documented privately
+* Aggregated statistics published annually
+* Lessons learned incorporated into guidelines
+
+== Integration with RSR
+
+This MAA framework satisfies RSR Category 11 requirements:
+
+* [x] MAA principles embedded in architecture
+* [x] RMR utilities defined
+* [x] RMO utilities defined
+* [x] Formal verification of accountability properties (via Isabelle proofs)
+* [x] Audit trails via Git + SPDX
+* [x] Provenance chains in `.well-known/provenance.json`
+
+== Implementation Status
+
+[cols="1,1,2"]
+|===
+|Component |Status |Notes
+
+|RMR Tracking
+|Partial
+|Manual process, automation planned
+
+|RMO Monitoring
+|Active
+|CI/CD integration complete
+
+|Audit Trail
+|Active
+|Git + SPDX + provenance.json
+
+|Enforcement
+|Defined
+|Process documented, rarely needed
+
+|Verification
+|Active
+|`just validate` runs all checks
+|===
+
+== Contact
+
+* Accountability questions: Open issue with `accountability` label
+* Private concerns: See SECURITY.md for secure contact
+* Governance matters: See GOVERNANCE.adoc

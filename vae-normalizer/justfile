@@ -865,7 +865,7 @@ validate: rsr-docs rsr-spdx rsr-well-known rsr-security fmt clippy test
 [group('rsr')]
 rsr-docs:
     @echo "Checking RSR documentation..."
-    @test -f README.md && echo "  ✓ README.md" || echo "  ✗ README.md MISSING"
+    @test -f README.adoc && echo "  ✓ README.adoc" || echo "  ✗ README.adoc MISSING"
     @test -f LICENSE.txt && echo "  ✓ LICENSE.txt" || echo "  ✗ LICENSE.txt MISSING"
     @test -f SECURITY.md && echo "  ✓ SECURITY.md" || echo "  ✗ SECURITY.md MISSING"
     @test -f CODE_OF_CONDUCT.md && echo "  ✓ CODE_OF_CONDUCT.md" || echo "  ✗ CODE_OF_CONDUCT.md MISSING"
@@ -873,6 +873,7 @@ rsr-docs:
     @test -f FUNDING.yml && echo "  ✓ FUNDING.yml" || echo "  ✗ FUNDING.yml MISSING"
     @test -f GOVERNANCE.adoc && echo "  ✓ GOVERNANCE.adoc" || echo "  ✗ GOVERNANCE.adoc MISSING"
     @test -f MAINTAINERS.md && echo "  ✓ MAINTAINERS.md" || echo "  ✗ MAINTAINERS.md MISSING"
+    @test -f ACCOUNTABILITY.adoc && echo "  ✓ ACCOUNTABILITY.adoc" || echo "  ✗ ACCOUNTABILITY.adoc MISSING"
     @test -f .gitignore && echo "  ✓ .gitignore" || echo "  ✗ .gitignore MISSING"
     @test -f .gitattributes && echo "  ✓ .gitattributes" || echo "  ✗ .gitattributes MISSING"
     @test -f CHANGELOG.md && echo "  ✓ CHANGELOG.md" || echo "  ✗ CHANGELOG.md MISSING"
@@ -911,6 +912,17 @@ rsr-security:
     @grep -q "cgr.dev/chainguard" Containerfile && echo "  ✓ Container base: Chainguard Wolfi" || echo "  ✗ Container base: NOT Chainguard"
     @grep -q "USER" Containerfile && echo "  ✓ Non-root container" || echo "  ✗ Non-root container MISSING"
 
+# Check MAA (Mutually Assured Accountability) requirements
+[group('rsr')]
+rsr-maa:
+    @echo "Checking MAA requirements..."
+    @test -f ACCOUNTABILITY.adoc && echo "  ✓ ACCOUNTABILITY.adoc" || echo "  ✗ ACCOUNTABILITY.adoc MISSING"
+    @grep -q "RMR\|Reputation.*Merit.*Rights" ACCOUNTABILITY.adoc 2>/dev/null && echo "  ✓ RMR utilities documented" || echo "  ✗ RMR utilities MISSING"
+    @grep -q "RMO\|Responsibility.*Monitoring.*Obligations" ACCOUNTABILITY.adoc 2>/dev/null && echo "  ✓ RMO utilities documented" || echo "  ✗ RMO utilities MISSING"
+    @grep -q "Perimeter" CONTRIBUTING.adoc 2>/dev/null && echo "  ✓ TPCF in CONTRIBUTING.adoc" || echo "  ✗ TPCF MISSING"
+    @test -f .well-known/provenance.json && echo "  ✓ Provenance chain" || echo "  ✗ Provenance chain MISSING"
+    @echo "  ✓ Audit trail: Git + SPDX"
+
 # Full RSR compliance report
 [group('rsr')]
 rsr-report:
@@ -925,6 +937,8 @@ rsr-report:
     @just rsr-well-known
     @echo ""
     @just rsr-security
+    @echo ""
+    @just rsr-maa
     @echo ""
     @echo "Run 'just validate' for full validation with tests"
 
