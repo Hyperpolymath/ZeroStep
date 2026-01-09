@@ -695,20 +695,47 @@ release-archive: release
     tar -czvf vae-normalizer-$(git describe --tags 2>/dev/null || echo "dev").tar.gz \
         -C {{release_dir}} vae-normalizer
 
-# Bump version (patch)
+# Bump version (patch): 1.0.0 -> 1.0.1
 [group('release')]
 bump-patch:
-    @echo "TODO: Implement version bumping"
+    #!/usr/bin/env bash
+    set -euo pipefail
+    current=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+    major=$(echo "$current" | cut -d. -f1)
+    minor=$(echo "$current" | cut -d. -f2)
+    patch=$(echo "$current" | cut -d. -f3)
+    new_patch=$((patch + 1))
+    new_version="${major}.${minor}.${new_patch}"
+    sed -i "s/^version = \"${current}\"/version = \"${new_version}\"/" Cargo.toml
+    sed -i "s/version = \"${current}\"/version = \"${new_version}\"/" src/main.rs 2>/dev/null || true
+    echo "Bumped version: ${current} -> ${new_version}"
 
-# Bump version (minor)
+# Bump version (minor): 1.0.0 -> 1.1.0
 [group('release')]
 bump-minor:
-    @echo "TODO: Implement version bumping"
+    #!/usr/bin/env bash
+    set -euo pipefail
+    current=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+    major=$(echo "$current" | cut -d. -f1)
+    minor=$(echo "$current" | cut -d. -f2)
+    new_minor=$((minor + 1))
+    new_version="${major}.${new_minor}.0"
+    sed -i "s/^version = \"${current}\"/version = \"${new_version}\"/" Cargo.toml
+    sed -i "s/version = \"${current}\"/version = \"${new_version}\"/" src/main.rs 2>/dev/null || true
+    echo "Bumped version: ${current} -> ${new_version}"
 
-# Bump version (major)
+# Bump version (major): 1.0.0 -> 2.0.0
 [group('release')]
 bump-major:
-    @echo "TODO: Implement version bumping"
+    #!/usr/bin/env bash
+    set -euo pipefail
+    current=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+    major=$(echo "$current" | cut -d. -f1)
+    new_major=$((major + 1))
+    new_version="${new_major}.0.0"
+    sed -i "s/^version = \"${current}\"/version = \"${new_version}\"/" Cargo.toml
+    sed -i "s/version = \"${current}\"/version = \"${new_version}\"/" src/main.rs 2>/dev/null || true
+    echo "Bumped version: ${current} -> ${new_version}"
 
 # ============================================================================
 # DOWNLOAD & DATA

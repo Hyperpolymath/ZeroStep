@@ -820,6 +820,72 @@ fn cmd_stats(output: PathBuf, format: &str) -> Result<()> {
     Ok(())
 }
 
+/// Export manifest data to different formats
+fn cmd_export(output: PathBuf, format: &str, dest: PathBuf) -> Result<()> {
+    let manifest_path = output.join("manifest.csv");
+    if !manifest_path.exists() {
+        bail!("Manifest not found: {}", manifest_path.display());
+    }
+
+    println!("Exporting manifest to {} format...", format);
+
+    // Read all records from manifest
+    let mut reader = csv::Reader::from_path(&manifest_path)?;
+    let headers = reader.headers()?.clone();
+
+    match format {
+        "csv" => {
+            // Copy CSV with optional transformation
+            let mut writer = Writer::from_path(&dest)
+                .with_context(|| format!("Failed to create output file: {}", dest.display()))?;
+
+            writer.write_record(&headers)?;
+            for result in reader.records() {
+                let record = result?;
+                writer.write_record(&record)?;
+            }
+            writer.flush()?;
+        }
+
+        "json" => {
+            // Export as JSON array of objects
+            let mut records: Vec<serde_json::Value> = Vec::new();
+            let header_vec: Vec<&str> = headers.iter().collect();
+
+            for result in reader.records() {
+                let record = result?;
+                let mut obj = serde_json::Map::new();
+                for (i, field) in record.iter().enumerate() {
+                    if i < header_vec.len() {
+                        // Try to parse numeric fields
+                        if let Ok(num) = field.parse::<u64>() {
+                            obj.insert(header_vec[i].to_string(), serde_json::Value::Number(num.into()));
+                        } else {
+                            obj.insert(header_vec[i].to_string(), serde_json::Value::String(field.to_string()));
+                        }
+                    }
+                }
+                records.push(serde_json::Value::Object(obj));
+            }
+
+            let json = serde_json::to_string_pretty(&records)?;
+            fs::write(&dest, json)
+                .with_context(|| format!("Failed to write JSON: {}", dest.display()))?;
+        }
+
+        "parquet" => {
+            bail!("Parquet export requires the `parquet` crate. Use csv or json format instead, or add parquet dependency to Cargo.toml");
+        }
+
+        _ => {
+            bail!("Unknown export format '{}'. Supported: csv, json, parquet", format);
+        }
+    }
+
+    println!("Exported {} records to: {}", format, dest.display());
+    Ok(())
+}
+
 fn cmd_hash(file: PathBuf) -> Result<()> {
     let checksum = compute_file_checksum(&file)?;
     println!("{}", checksum);
@@ -1138,9 +1204,8 @@ fn main() -> Result<()> {
             cmd_stats(output, &format)
         }
 
-        Commands::Export { output: _, format: _, dest: _ } => {
-            println!("Export command not yet implemented");
-            Ok(())
+        Commands::Export { output, format, dest } => {
+            cmd_export(output, &format, dest)
         }
 
         Commands::Hash { file } => cmd_hash(file),

@@ -76,9 +76,30 @@ impl Default for DublinCoreMetadata {
 
 /// Get current date in ISO 8601 format without chrono dependency
 fn chrono_lite_date() -> String {
-    // Use a simple placeholder that will be replaced at runtime
-    // In production, this would use system time
-    "2024-01-01".to_string()
+    use std::time::{SystemTime, UNIX_EPOCH};
+
+    let duration = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default();
+
+    // Calculate date components from Unix timestamp
+    let secs = duration.as_secs();
+    let days_since_epoch = secs / 86400;
+
+    // Algorithm to convert days since epoch to year-month-day
+    // Based on Howard Hinnant's algorithm
+    let z = days_since_epoch as i64 + 719468;
+    let era = if z >= 0 { z } else { z - 146096 } / 146097;
+    let doe = (z - era * 146097) as u32;
+    let yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+    let y = yoe as i64 + era * 400;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = doy - (153 * mp + 2) / 5 + 1;
+    let m = if mp < 10 { mp + 3 } else { mp - 9 };
+    let year = if m <= 2 { y + 1 } else { y };
+
+    format!("{:04}-{:02}-{:02}", year, m, d)
 }
 
 /// Generate CUE metadata file
