@@ -1,64 +1,12 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: vae-normalizer
 Upstream-Contact: Jonathan Jewell <enquiries@joshuajewell.dev>
-Source: https://gitlab.com/hyperpolymath/zerostep
+Source: https://github.com/hyperpolymath/zerostep
 
 Files: *
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.rs
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.jl
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.thy
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.ncl
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.cue
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: *.nix
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: justfile
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: Containerfile
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: .well-known/*
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
-
-Files: .githooks/*
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
-License: MIT
+Copyright: 2024-2025 Jonathan Jewell <enquiries@joshuajewell.dev>
+License: PMPL-1.0
 
 Files: CITATION.cff
-Copyright: 2024 Jonathan Jewell <enquiries@joshuajewell.dev>
+Copyright: 2024-2025 Jonathan Jewell <enquiries@joshuajewell.dev>
 License: CC0-1.0
-
-Files: LICENSE-GPL.txt
-Copyright: Free Software Foundation
-License: GPL-3.0-or-later
-
-Files: LICENSE-MIT.txt
-Copyright: 2024 Jonathan Jewell
-License: MIT
-
-Files: LICENSE-PALIMPSEST.txt
-Copyright: 2024 Jonathan Jewell
-License: LicenseRef-Palimpsest

@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2024 Joshua Jewell
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PMPL-1.0
 = VAE Dataset Normalizer
 
-image:https://img.shields.io/badge/license-AGPL--3.0-blue.svg[AGPL-3.0,link="https://www.gnu.org/licenses/agpl-3.0"] image:https://img.shields.io/badge/philosophy-Palimpsest-purple.svg[Palimpsest,link="https://github.com/hyperpolymath/palimpsest-licence"]
+image:https://img.shields.io/badge/license-Palimpsest--MPL--1.0-purple.svg[Palimpsest-MPL-1.0,link="https://github.com/hyperpolymath/palimpsest-license"]
 :toc: macro
 :toclevels: 3
 :icons: font
@@ -322,31 +322,16 @@ Run `just validate` for full RSR compliance verification.
 
 == License
 
-This software is **dual-licensed**. Choose the license that best fits your use case:
+This software is licensed under the link:LICENSE[Palimpsest-MPL-1.0 License].
 
-[cols="1,2"]
-|===
-|License |Description
+The Palimpsest-MPL extends MPL-2.0 with provisions for:
 
-|link:LICENSE-MIT.txt[MIT License]
-|Permissive, minimal restrictions, commercial use permitted
+* Ethical use and emotional lineage preservation
+* Quantum-safe cryptographic provenance
+* Attribution and transparent modification history
+* Community benefit and cooperative economics
 
-|link:LICENSE-GPL.txt[GPL v3.0+]
-|Copyleft, derivative works must be open source, patent protection
-|===
-
-SPDX-License-Identifier: MIT OR GPL-3.0-or-later
-
-=== Palimpsest License (Encouraged)
-
-We encourage adoption of the link:LICENSE-PALIMPSEST.txt[Palimpsest License] as a complementary ethical framework emphasizing:
-
-* Attribution and provenance tracking
-* Collaborative improvement
-* Ethical use and community benefit
-* Transparent modification history
-
-The Palimpsest License is philosophically encouraged but not legally required.
+See https://github.com/hyperpolymath/palimpsest-license[palimpsest-license] for full details.
 
 == Related
 
