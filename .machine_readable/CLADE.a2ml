@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Clade declaration — part of the gv-clade-index registry
+# See: https://github.com/hyperpolymath/gv-clade-index
+
+[identity]
+uuid = "0f6e4a31-3064-578b-bbcf-2ed96ce64846"
+primary-forge = "github"
+primary-owner = "hyperpolymath"
+canonical-name = "zerostep"
+prefixed-name = "dx-zerostep"
+
+[clade]
+primary = "dx"
+secondary = []
+assigned = "2026-03-16"
+rationale = ""
+
+[forges]
+github = "hyperpolymath/zerostep"
+gitlab = "hyperpolymath/zerostep"
+bitbucket = "hyperpolymath/zerostep"
+
+[lineage]
+type = "standalone"
+parent = "Zero-step automation"
+born = "2026-03-16"
