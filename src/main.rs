@@ -17,6 +17,7 @@
 //! 4. **Diff Compression**: Reduces dataset size by storing only the residual 
 //!    between original and VAE-decoded images.
 
+#![forbid(unsafe_code)]
 mod metadata;
 
 use anyhow::{Context, Result, bail};
