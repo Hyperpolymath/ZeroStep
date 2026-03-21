@@ -1080,3 +1080,7 @@ alias v := validate
 alias d := docs
 alias w := watch
 alias s := status
+
+# Run panic-attacker pre-commit scan
+assail:
+    @command -v panic-attack >/dev/null 2>&1 && panic-attack assail . || echo "panic-attack not found — install from https://github.com/hyperpolymath/panic-attacker"
