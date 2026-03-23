@@ -3,9 +3,9 @@
 
 //! CUE Metadata Engine — Dublin Core Compliance.
 //!
-//! This module generates the formal provenance manifests for VAE datasets. 
-//! It ensures that dataset metadata follows the Dublin Core Metadata 
-//! Initiative (DCMI) terms, providing a machine-readable audit trail 
+//! This module generates the formal provenance manifests for VAE datasets.
+//! It ensures that dataset metadata follows the Dublin Core Metadata
+//! Initiative (DCMI) terms, providing a machine-readable audit trail
 //! for AI training data.
 //!
 //! OUTPUT: A `.cue` file containing:
@@ -25,9 +25,9 @@ pub struct DublinCoreMetadata {
     pub title: String,
     pub creator: String,
     pub description: String,
-    pub date: String,      // ISO 8601
-    pub r#type: String,    // Always "Dataset"
-    pub format: String,    // MIME type
+    pub date: String,   // ISO 8601
+    pub r#type: String, // Always "Dataset"
+    pub format: String, // MIME type
     pub identifier: String,
     pub provenance: String,
 }

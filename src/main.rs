@@ -3,24 +3,24 @@
 
 //! VAE Dataset Normalizer — High-Assurance ML Data Engineering.
 //!
-//! This tool prepares Variational Autoencoder (VAE) datasets for verified 
-//! machine learning training. It ensures that data splits are reproducible, 
+//! This tool prepares Variational Autoencoder (VAE) datasets for verified
+//! machine learning training. It ensures that data splits are reproducible,
 //! balanced, and cryptographically verified.
 //!
 //! CORE FEATURES:
-//! 1. **SHAKE256 Checksumming**: Provides 256-bit collision-resistant digests 
+//! 1. **SHAKE256 Checksumming**: Provides 256-bit collision-resistant digests
 //!    for all image assets to ensure provenance.
-//! 2. **Deterministic Splitting**: Uses `rand_chacha` with fixed seeds to 
+//! 2. **Deterministic Splitting**: Uses `rand_chacha` with fixed seeds to
 //!    guarantee identical train/test/val splits across environments.
-//! 3. **Size Stratification**: Optionally balances splits based on original 
+//! 3. **Size Stratification**: Optionally balances splits based on original
 //!    file size to prevent bias in compression performance analysis.
-//! 4. **Diff Compression**: Reduces dataset size by storing only the residual 
+//! 4. **Diff Compression**: Reduces dataset size by storing only the residual
 //!    between original and VAE-decoded images.
 
 #![forbid(unsafe_code)]
 mod metadata;
 
-use anyhow::{Context, Result, bail};
+use anyhow::{bail, Context, Result};
 use clap::Parser;
 // ... [other imports]
 
