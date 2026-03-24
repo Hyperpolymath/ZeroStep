@@ -1,0 +1,27 @@
+# SPDX-License-Identifier: MIT
+# SPDX-FileCopyrightText: 2024 Joshua Jewell
+#
+# Stapeln selur-compose.toml — Zerostep (VAE Dataset Normalizer)
+# CLI tool: Rust binary with /data volume mount
+
+[project]
+name = "zerostep"
+
+[services.app]
+build = { context = ".", dockerfile = "Containerfile" }
+restart = "no"
+networks = ["default"]
+
+volumes = [
+  "./data:/data:Z",
+]
+
+healthcheck = { test = "/app/vae-normalizer --version", interval = "30s", timeout = "5s", start_period = "5s", retries = 3 }
+
+[services.app.labels]
+"org.opencontainers.image.title" = "VAE Dataset Normalizer"
+"org.opencontainers.image.version" = "1.0.0"
+"org.opencontainers.image.licenses" = "MIT"
+
+[networks.default]
+driver = "bridge"
