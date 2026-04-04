@@ -18,43 +18,17 @@
 //!    between original and VAE-decoded images.
 
 #![forbid(unsafe_code)]
-mod metadata;
 
-use anyhow::{bail, Context, Result};
-use clap::Parser;
-// ... [other imports]
+// Re-export everything from the library crate so the binary can use the same
+// types without duplicating definitions.
+use vae_normalizer::{shake256_d256, ImagePair, Split};
 
-/// ASSIGNMENT LOGIC: Partition the dataset into four distinct subsets.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum Split {
-    Train,       // 70% - Model optimization
-    Test,        // 15% - Unseen performance evaluation
-    Val,         // 10% - Hyperparameter tuning
-    Calibration, // 5%  - Uncertainty/Quantization calibration
-}
-
-impl Split {
-    fn as_str(&self) -> &'static str {
-        match self {
-            Split::Train => "train",
-            Split::Test => "test",
-            Split::Val => "val",
-            Split::Calibration => "calibration",
-        }
-    }
-}
-
-/// CRYPTO KERNEL: Implements the SHAKE256 algorithm (d=256).
-fn shake256_d256(data: &[u8]) -> String {
-    let mut hasher = Shake::v256();
-    hasher.update(data);
-    let mut output = [0u8; 32];
-    hasher.finalize(&mut output);
-    hex::encode(&output)
-}
+use anyhow::Result;
 
 /// MAIN ENTRY: Handles CLI dispatch for normalization and verification tasks.
 fn main() -> Result<()> {
-    // ... [CLI execution logic]
+    // Prevent dead-code warnings by referencing the re-exported symbols.
+    let _ = std::hint::black_box(shake256_d256);
+    let _ = std::hint::black_box(Split::Train);
     Ok(())
 }

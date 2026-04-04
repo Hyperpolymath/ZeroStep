@@ -7,7 +7,17 @@ description = "VAE dataset normalizer with formal verification and cryptographic
 license = "MIT"
 repository = "https://huggingface.co/datasets/joshuajewell/VAEDecodedImages-SDXL"
 
+[lib]
+name = "vae_normalizer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "vae-normalizer"
+path = "src/main.rs"
+
 [dependencies]
+# Hex encoding for SHAKE256 digests
+hex = "0.4"
 # SHAKE256 implementation
 tiny-keccak = { version = "2.0", features = ["shake"] }
 # CLI argument parsing
