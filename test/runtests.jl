@@ -20,4 +20,9 @@ using VAEContrastive # Assuming VAEContrastive is the module name of the package
 
     # Add a dummy test for now
     @test true == true
+
+    # CRG Grade C tests
+    include("e2e_test.jl")
+    include("property_test.jl")
+
 end
